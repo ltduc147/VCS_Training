@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+  height: 100%;
+  width: 100%;
+  padding: 70px;
+  background-color: #F3F4FA;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.wrapper{
+  height: 100%;
+  width:  100%;
+  min-height: 100vh;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 50px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.search_bar{
+  display: flex;
+  margin-bottom: 30px;
+  justify-content: end;
+  margin-right: 30px;
+}
+
+
+.search_form {
+  display: flex;
+}
+
+.search_input{
+  height: 40px;
+  width: 200px;
+  padding: 0 10px 0 10px ;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.4);
+}
+
+.search_button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  height: 40px;
+  width: 100px;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  background-color: white;
+  color: rgb(255, 79, 35);
+  pointer-events: none;
+}
+
+/* .search_button:hover, .search_button:hover i{
+  background-color: rgb(255, 79, 35);
+  color: white;
+} */
+
+.add_record{
+  margin-right: auto;
+  margin-left: 20px;
+  align-self: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.4);
+  font-size: 1.1rem;
+  height: 40px;
+  width: 180px;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: white;
+    color: rgb(255, 79, 35);;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.add_record:hover, .add_record:hover i{
+  background-color: rgb(255, 79, 35);
+  color: white;
+}
+
+
+.main_content{
+  height: 100%;
+  width: 100%;
+  padding: 0 20px 0 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.edit, .delete{
+  width: 60px;
+  text-align: center;
+}
+
+.td_user{
+  text-align: left;
+  padding-left: 20px;
+}
+
+.td_pass {
+  text-align: left;
+}
+
+.td_email {
+  text-align: left;
+}
+
+.td_name {
+  padding-left: 20px;
+  text-align: left;
+}
+
+.td_phnum {
+  text-align: left;
+}
+
+tr {
+  height: 100%;
+  border-bottom: 1px solid rgba(93, 92, 92, 0.1);
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+th {
+  color: black;
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding-bottom: 10px;
+}
+
+td {
+  color: black;
+  padding: 10px 0 10px 0;
+}
+
+i.icon_edit {
+  color:  orange;
+  cursor: pointer;
+}
+
+i.icon_delete {
+  color: red;
+  cursor: pointer;
+}
+
+i.true {
+  color: green;
+}
+
+i.false {
+  color: rgb(237, 147, 10);
+}
+
+
+a.link {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left :15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none; 
+  color: black; 
+}
+
+a.link_button {
+  margin-left :15px;
+  text-decoration: none;  
+  padding: 10px;
+  border-radius: 23px;
+  color: black;
+
+}
+
+a.link_button:hover, a.link:hover {
+  background-color: rgb(239, 239, 239);
+}
+
+a.isset{
+  color: white;
+  background-color: rgb(228, 137, 0);
+  pointer-events: none;
+}
+
+a.disable{
+  pointer-events: none;
+  color: rgb(198, 198, 198);
+}
+
+.page{
+  display: flex;
+  flex-direction: column;
+}
+
+.paglink{
+  padding: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: baseline;
+}
+
+.delete_message{
+  position: fixed;
+  display: flex;
+  align-items: center;
+  top: 30px;
+  right: 600px;
+  width: 300px;
+  border-radius: 5px;
+  transition: all 2s ease-in-out;
+  padding: 10px;
+}
+
+.success{
+  background-color: rgb(0, 145, 80);
+}
+
+.fail{
+  background-color: rgb(228, 54, 54);
+}
+
+.delete_message *{
+  margin: 0 10px 0 10px;
+  color: white;
+  font-weight: bold;
+}
+
+.delete_message .close{
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.hidden{
+  display: none;
+}
+
