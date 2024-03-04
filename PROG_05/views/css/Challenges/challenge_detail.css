@@ -53,12 +53,20 @@
 
 .assignment_detail_container .assignment_info{
   color: #6c6c6c;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
 }
 
 .assignment_detail_container .assignment_description{
-  padding-bottom: 20px;
+  font-size: 1.5rem;
+  font-style: italic;
+  padding-bottom: 10px;
   border-bottom: 1px solid rgba(45, 182, 203,1);
+}
+
+.assignment_detail_container .hint{
+  font-size: 1.2rem;
+  font-style: italic;
+  margin-top: 10px;  
 }
 
 
@@ -74,7 +82,7 @@
   cursor: pointer;
 }
 
-.submission_tab .submission_info{
+.answer_tab .submission_info{
   text-decoration: none;
   width: 100%;
   display: flex;
@@ -84,27 +92,6 @@
   border: 1px solid rgba(93, 92, 92, 0.4);
   cursor: pointer;
   margin-bottom: 10px;
-}
-
-.submission_tab .submission_detail{
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-}
-
-.submission_tab .submission_info i{
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  color: black;
-}
-
-.submission_tab .submission_info i:hover{
-  background-color: #F3F4FA;
 }
 
 .main_content .file_name{
@@ -126,9 +113,8 @@
 
 
 
-.assignment_detail_container .submission_tab{
+.assignment_detail_container .answer_tab{
   width: 400px;
-  height: fit-content;
   margin-left: 40px;
   display: flex ;
   flex-direction: column;
@@ -137,19 +123,19 @@
   border-radius: 5px;
 }
 
-.assignment_detail_container .submission_title{
+.assignment_detail_container .answer_title{
   font-size: 1.5rem;
   margin-bottom: 10px;
   font-weight: bold;
   padding-left: 3px;
 }
 
-.assignment_detail_container .add_button{
+.assignment_detail_container .answer_button{
   margin-left: auto;  
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
-  border: 1px solid rgba(93, 92, 92 ,0.4);
+  border: 1px solid rgba(0,0,0,0.4);
   font-size: 1.1rem;
   height: 40px;
   width: 100%;
@@ -161,58 +147,25 @@
   text-decoration: none;
 }
 
-.add_button:hover, .add_button:hover i{
+.assignment_detail_container input{
+  width: 100%;
+  height: 30px;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,0.4);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.answer_button:hover, .answer_button:hover i{
   background-color: #2db6cb;
   color: white;
 }
 
-.assignment_detail_container .submission_form{
-  display: none;
-}
 
-
-.submission_list{
-  margin-top: 25px;
-  border-top: 1px dashed rgba(93, 92, 92, 0.25);
+/* .file_content{
+  border-top: 1px solid rgba(0,0,0,0.2);
+  margin-top: 30px;
   padding-top: 20px;
-}
-
-.submission_list .submission_row{
-  text-decoration: none;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  padding: 15px 10px 15px 20px;
-  border-radius: 10px;
-  border: 1px solid rgba(93, 92, 92, 0.4);
-  cursor: pointer;
-  margin-bottom: 15px;
-}
-
-.submission_list .submission_info{
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-}
-
-.submission_list .list_title{
-  font-size: 1.5rem;
-  font-style: italic;
-  margin-left: 3px;
-  margin-bottom: 20px;
-
-}
-
-.submission_list .submission_name{
-  font-size: 1.2rem;
-  width: fit-content;
-  color: #268d9c;
-  text-decoration: none;
-  margin-bottom: 5px;
-}
-
-.submission_list .submission_detail{
-  width: fit-content;
-  color: #6c6c6c;
-  text-decoration: none;
-}
+  font-size: 1.3rem;
+} */

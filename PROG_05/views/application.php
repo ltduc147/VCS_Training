@@ -49,6 +49,13 @@
               <div class="text">Assignment</div>
               <span class="material-icons forward" style="font-size:12px;">arrow_forward_ios</span>
             </a>
+            <a href="./?controller=Challenge&action=challenge_list" class="logout_link navigation_link">
+              <div class="circle">
+                <span class="material-icons" style="font-size:18px;">extension</span>
+              </div>
+              <div class="text">Challenge</div>
+              <span class="material-icons forward" style="font-size:12px;">arrow_forward_ios</span>
+            </a>
             
             <a href="?controller=Auth&action=logout" class="logout_link navigation_link">
               <div class="circle">

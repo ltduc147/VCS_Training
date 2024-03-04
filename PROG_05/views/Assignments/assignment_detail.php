@@ -41,8 +41,8 @@
             </div>
             <?php endif; ?>
           </div>
-          <div class="submission_list">
-            <?php if(isset($submission_list) && $_SESSION['role'] === 'teacher'):  ?>
+          <?php if(isset($submission_list) && $_SESSION['role'] === 'teacher'):  ?>
+            <div class="submission_list">
               <div class="list_title">Submissions</div>
               <?php foreach($submission_list as $row):  ?>
                 <a class="submission_row" href="<?php echo $row['file_url']?>" download="<?php echo $row['file_name']?>">
@@ -53,9 +53,8 @@
                 </a>
               
               <?php endforeach; ?>
-              
-            <?php endif; ?>
-          </div>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
     </div>

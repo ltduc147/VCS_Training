@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link type="text/css" rel="stylesheet" href="views/css/Assignments/assignment_list.css">
+  <link type="text/css" rel="stylesheet" href="views/css/Challenges/challenge_list.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
@@ -11,30 +11,30 @@
     <div class="wrapper">
       <div class="content">
         <div class="top_bar">
-          <div class="page_title">ASSIGNMENT</div>
+          <div class="page_title">CHALLENGE</div>
           <?php if ($_SESSION['role'] === 'teacher'):?>
-            <button class="add_record">
-              <i class="material-icons button">assignment_add</i> &nbsp;
-              Add assignment
-            </button>
-            <?php endif;?>
+          <button class="add_record">
+            <i class="material-icons button">extension</i> &nbsp;
+            Add challenge
+          </button>
+          <?php endif;?>
         </div>
         <div class="main_content">
           <div class="page">
             <div class="assignment_list_container">
-              <?php if (isset($assignments)) foreach($assignments as $assignment):?>
+              <?php if (isset($challenges)) foreach($challenges as $challenge):?>
                 <div class="assignment_row">
-                  <div class="assignment_content" data-id='<?php echo $assignment['id'];?>'>
-                    <i class="material-symbols-outlined icon">assignment</i>
+                  <div class="assignment_content" data-id='<?php echo $challenge['id'];?>'>
+                    <i class="material-symbols-outlined icon">extension</i>
                     <div class="assignment_detail">
-                      <div class="assignment_title"><?php echo $assignment['title'] ?></div>
-                      <div class="assignment_info"><?php echo $assignment['name'] ?></div>
+                      <div class="assignment_title"><?php echo $challenge['title'] ?></div>
+                      <div class="assignment_info"><?php echo $challenge['name'] ?></div>
                     </div>
                   </div>
                   <div class="assignment_action">
-                    <?php if ($assignment['teacher_id'] === $_SESSION['id']):?>
-                      <i class='material-icons icon_edit' data-id='<?php echo $assignment['id']?>'>border_color</i>
-                      <i class='material-icons icon_delete' data-id='<?php echo $assignment['id']?>'>&#xe872;</i>
+                    <?php if ($challenge['teacher_id'] === $_SESSION['id']):?>
+                      <i class='material-icons icon_edit' data-id='<?php echo $challenge['id']?>'>border_color</i>
+                      <i class='material-icons icon_delete' data-id='<?php echo $challenge['id']?>'>&#xe872;</i>
                     <?php endif; ?>
                   </div>
                 </div>
@@ -75,14 +75,14 @@
     $(document).ready(function(){
       $('.assignment_content').click(function(){
         var user_id = $(this).data('id');
-        location.href = `./?controller=Assignment&action=assignment_detail&id=${user_id}`;
+        location.href = `./?controller=Challenge&action=challenge_detail&id=${user_id}`;
       });
 
 
       $('.add_record').click(function(){
         // Send AJAX request to viewForm endpoint
         $.ajax({
-            url: './?controller=Assignment&action=assignment_form',
+            url: './?controller=Challenge&action=challenge_form',
             type: 'GET',
             success: function(response) {
                 // Display the edit form
@@ -97,7 +97,7 @@
                   event.preventDefault();
                   var formData = new FormData($(".record_form")[0]);
                   $.ajax({
-                    url : './?controller=Assignment&action=add',
+                    url : './?controller=Challenge&action=add',
                     type: 'POST',
                     data : formData,
                     contentType: false,
@@ -121,7 +121,7 @@
           // Send AJAX request to showEditForm endpoint
         
           $.ajax({
-              url: `./?controller=Assignment&action=assignment_form&id=${assignmentId}`,
+              url: `./?controller=Challenge&action=challenge_form&id=${assignmentId}`,
               type: 'GET',
               success: function(response) {
                   // Display the edit form
@@ -137,7 +137,7 @@
                     event.preventDefault();
                     var formData = new FormData($(".record_form")[0]);
                     $.ajax({
-                      url : `./?controller=Assignment&action=update&id=${assignmentId}`,
+                      url : `./?controller=Challenge&action=update&id=${assignmentId}`,
                       type: 'POST',
                       data : formData,
                       contentType: false,
@@ -172,7 +172,7 @@
             var assignmentId = $(this).data('id');
             // Send AJAX request to viewForm endpoint
             $.ajax({
-                url : `./?controller=Assignment&action=delete&id=${assignmentId}`,
+                url : `./?controller=Challenge&action=delete&id=${assignmentId}`,
                 type: 'GET',
                 success: function(response) {
                     // Display the edit form
