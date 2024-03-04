@@ -10,16 +10,12 @@
     <div class="wrapper">
       <div class="content">
         <div class="student_form"></div>
-        <div class="search_bar">
+        <div class="top_bar">
+          <div class="page_title">STUDENT</div>
           <button class="add_record">
             <i class="material-icons button">person_add_alt</i> &nbsp;
             Add student
           </button>
-          <form action="" class="search_form" name="search_form">
-            <input type="text" class="search_input" name="search_input" value='<?php echo $_GET["search_input"] ?? "" ?>'>
-            <input type="text" style="display: none;">
-            <div type="submit" class="search_button"><i class="material-icons button">&#xe8b6;</i>  Search </div>
-          </form>
         </div>
         <div class="main_content">
           <!-- <?php
@@ -88,17 +84,6 @@
       </div>
     </div>
   </div>
-  <script>
-    document.getElementsByClassName("search_input")[0].addEventListener('change', search);
-    
-    function search(){
-        let url ="./?controller=User&action=student_management&page=1";
-        if (document.forms["search_form"]["search_input"].value){
-          url += "&search_input=" + document.forms["search_form"]["search_input"].value;
-        }
-        window.location.replace(url);
-      }
-  </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     $(document).ready(function(){

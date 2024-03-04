@@ -61,7 +61,7 @@ class UserModel {
 
             if (!empty($values)){
                 for ($i=0; $i < count($values); $i++){
-                    if ($keys[$i] == "id"){
+                    if ($keys[$i] === "id"){
                         $typeOfBind .= "i";
                     } else {
                         $typeOfBind .= "s";
@@ -116,7 +116,7 @@ class UserModel {
             if (!empty($values)){
                 $typeOfBind = ""; 
                 for ($i=0; $i < count($values); $i++){
-                    if ($keys[$i] == "id"){
+                    if ($keys[$i] === "id"){
                         $typeOfBind .= "i";
                     } else {
                         $typeOfBind .= "s";
@@ -165,7 +165,7 @@ class UserModel {
             if (!empty($values)){
                 $typeOfBind = ""; 
                 for ($i=0; $i < count($values); $i++){
-                    if ($keys[$i] == "id"){
+                    if ($keys[$i] === "id"){
                         $typeOfBind .= "i";
                     } else {
                         $typeOfBind .= "s";

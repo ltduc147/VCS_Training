@@ -42,6 +42,13 @@
                   <span class="material-icons forward" style="font-size:12px;">arrow_forward_ios</span>
                 </a>
             <?php endif;?> 
+            <a href="./?controller=Assignment&action=assignment_list" class="logout_link navigation_link">
+              <div class="circle">
+                <span class="material-icons" style="font-size:18px;">assignment</span>
+              </div>
+              <div class="text">Assignment</div>
+              <span class="material-icons forward" style="font-size:12px;">arrow_forward_ios</span>
+            </a>
             
             <a href="?controller=Auth&action=logout" class="logout_link navigation_link">
               <div class="circle">

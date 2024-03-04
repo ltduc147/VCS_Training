@@ -15,7 +15,7 @@
     <form class="avatar_form" enctype="multipart/form-data" method="post">
       <div class="input_item username">
         <label for="avt_url">Url</label>
-        <input type="text" name="avt_url" class='url_input'  placeholder="Url of image">
+        <input type="text" name="avt_url" class='url_input'  placeholder="Url of image ...">
       </div>
       <div class="input_item username">
         <label for="avt">File</label>

@@ -1,0 +1,218 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+  height: 100%;
+  width: 100%;
+  padding: 70px;
+  background-color: #F3F4FA;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.wrapper{
+  height: 100%;
+  width:  100%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 80px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+
+.main_content{
+  height: 100%;
+  width: 100%;
+  padding: 20px 40px 20px 40px;
+}
+
+.assignment_detail_container{
+  display: flex;
+
+}
+
+.assignment_detail_container .assignment_detail{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.assignment_detail_container .assignment_title{
+  font-size: 2.3rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #2db6cb;
+}
+
+.assignment_detail_container .assignment_info{
+  color: #6c6c6c;
+  margin-bottom: 5px;
+}
+
+.assignment_detail_container .assignment_description{
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(45, 182, 203,1);
+}
+
+
+.assignment_detail_container .file_info{
+  text-decoration: none;
+  width: fit-content;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px 110px 15px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(93, 92, 92, 0.4);
+  cursor: pointer;
+}
+
+.submission_tab .submission_info{
+  text-decoration: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 15px 10px 15px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(93, 92, 92, 0.4);
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.submission_tab .submission_detail{
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.submission_tab .submission_info i{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  color: black;
+}
+
+.submission_tab .submission_info i:hover{
+  background-color: #F3F4FA;
+}
+
+.main_content .file_name{
+  font-size: 1.2rem;
+  width: fit-content;
+  color: #268d9c;
+  text-decoration: none;
+}
+
+.main_content .file_name:hover{
+  text-decoration: underline;
+}
+
+.main_content .file_type{
+  width: fit-content;
+  color: #6c6c6c;
+  text-decoration: none;
+}
+
+
+
+.assignment_detail_container .submission_tab{
+  width: 400px;
+  height: fit-content;
+  margin-left: 40px;
+  display: flex ;
+  flex-direction: column;
+  padding: 45px 30px 45px 30px;
+  border: 1px solid rgba(93, 92, 92, 0.4);
+  border-radius: 5px;
+}
+
+.assignment_detail_container .submission_title{
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+  padding-left: 3px;
+}
+
+.assignment_detail_container .add_button{
+  margin-left: auto;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.4);
+  font-size: 1.1rem;
+  height: 40px;
+  width: 100%;
+  border-radius:10px;
+  font-weight: bold;
+  background-color: white;
+  color: #2db6cb;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.add_button:hover, .add_button:hover i{
+  background-color: #2db6cb;
+  color: white;
+}
+
+.assignment_detail_container .submission_form{
+  display: none;
+}
+
+
+.submission_list{
+  margin-top: 25px;
+  border-top: 1px solid rgba(93, 92, 92, 0.4);
+  padding-top: 20px;
+}
+
+.submission_list .submission_row{
+  text-decoration: none;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 15px 10px 15px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(93, 92, 92, 0.4);
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.submission_list .submission_info{
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+
+.submission_list .list_title{
+  font-size: 1.5rem;
+  font-style: italic;
+  margin-left: 3px;
+  margin-bottom: 20px;
+
+}
+
+.submission_list .submission_name{
+  font-size: 1.2rem;
+  width: fit-content;
+  color: #268d9c;
+  text-decoration: none;
+  margin-bottom: 5px;
+}
+
+.submission_list .submission_detail{
+  width: fit-content;
+  color: #6c6c6c;
+  text-decoration: none;
+}

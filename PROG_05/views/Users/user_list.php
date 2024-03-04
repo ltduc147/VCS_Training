@@ -9,17 +9,20 @@
   <div class="container">
     <div class="wrapper">
       <div class="content">
+        <div class="top_bar">
+          <div class="page_title">LIST USER</div>
+        </div>
         <div class="main_content">
 
           <div class="page">
             <div class="user_list_container">
               <?php if (isset($record)) foreach($record as $row) :?>
-              <div class="user_card_container" data-id='<?php echo $row['id'];?>'>
-                <div class="user_card_content">
-                  <img src='<?php echo $row['avt_url']?>' alt="" class="user_avt">
+              <div class="user_row" data-id='<?php echo $row['id'];?>'>
+                <img src='<?php echo $row['avt_url']?>' alt="" class="user_avt">
+                <div class="user_detail">
                   <div class="user_fullname"><?php echo $row['full_name']?></div>
                   <div class="user_role"><?php echo $row['role']?></div>
-                  <div class="user_email"><?php echo $row['email']?></div>
+                  <div class="user_email"><span class="material-icons">mail</span><?php echo $row['email']?></div>
                 </div>
               </div>
               <?php endforeach;?>
@@ -56,7 +59,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script>
     $(document).ready(function(){
-      $('.user_card_container').click(function(){
+      $('.user_row').click(function(){
         var user_id = $(this).data('id');
         location.href = `./?controller=User&action=profile&id=${user_id}`;
       });
