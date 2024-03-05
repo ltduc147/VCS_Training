@@ -283,7 +283,7 @@
 
         // Handle update profile
         $('.change_button').click(function(){
-            event.preventDefault()
+            event.preventDefault();
             let newPass = $('input[name="new_pass"]').val();
             let confirmPass = $('input[name="confirm_pass"]').val();
             if (newPass === confirmPass){
@@ -308,6 +308,7 @@
         });
 
         $('.update_button').click(function(){
+          event.preventDefault();
           // Send AJAX request to changePass endpoint
           $.ajax({
             url : `./?controller=User&action=updateProfile`,
