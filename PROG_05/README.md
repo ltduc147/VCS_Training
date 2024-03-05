@@ -1,5 +1,5 @@
 # PROG 05
-Here is the web application to display CVE Records.
+Here is the web application to manage student information and document for class.
 
 # Features
 - View, create, edit, delete student for teacher.
