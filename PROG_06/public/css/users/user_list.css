@@ -1,0 +1,172 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container{
+  height: 100%;
+  width: 100%;
+  padding: 70px;
+  background-color: #F3F4FA;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.wrapper{
+  height: 100%;
+  width:  100%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  padding: 50px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.top_bar{
+  display: flex;
+  margin: 0 60px 15px 60px;
+  border-bottom: 2px dashed rgba(93, 92, 92, 0.25);
+  padding-bottom: 20px;
+}
+
+.page_title{
+  font-size: 2rem;
+  font-weight: bold;
+  align-self: flex-start;
+}
+
+
+.main_content{
+  height: 100%;
+  width: 100%;
+  padding: 20px 60px 20px 60px;
+}
+
+.main_content .page .user_list_container {
+  height:100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.user_list_container .user_row{
+  display: flex;
+  align-items: center;
+  padding: 5px 30px 5px 30px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(93, 92, 92, 0.4);
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.user_list_container .user_row, .user_list_container .user_row * {
+    text-decoration: none;
+}
+
+.user_list_container .user_row:hover{
+  background-color: #e2f2f6;
+}
+
+.user_list_container .user_avt{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #2db6cb;
+  color: white;
+  margin-right: 10px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+
+.user_list_container .user_detail{
+  position: relative;
+  padding: 15px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 15px;
+}
+
+.user_list_container .user_fullname{
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #00476a;
+  font-size: 1.2rem;
+}
+
+.user_list_container .user_row .user_role{
+  width: fit-content;
+  color: #6c6c6c;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  padding: 5px 10px 5px 10px;
+  background-color: rgb(224, 238, 238);
+  border-radius: 10px;
+}
+
+.user_list_container .user_email{
+  display: flex;
+  align-items: center;
+  color: #6c6c6c;
+}
+
+.user_list_container .user_email span{
+  margin-right: 5px;
+}
+
+
+a.link {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-left :15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+}
+
+a.link_button {
+  margin-left :15px;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 23px;
+  color: black;
+
+}
+
+a.link_button:hover, a.link:hover {
+  background-color: rgb(239, 239, 239);
+}
+
+a.isset{
+  color: white;
+  background-color: rgb(228, 137, 0);
+  pointer-events: none;
+}
+
+a.disable{
+  pointer-events: none;
+  color: rgb(198, 198, 198);
+}
+
+.page{
+  display: flex;
+  flex-direction: column;
+}
+
+.paglink{
+  padding: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: baseline;
+}
+
