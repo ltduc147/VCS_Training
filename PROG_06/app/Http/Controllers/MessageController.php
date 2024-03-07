@@ -21,17 +21,70 @@ class MessageController extends Controller
     }
 
 
-    public function create() {
+    public function create(Request $request) {
+
+
+        try {
+
+            $request->validate([
+                'sender_id' => 'required',
+                'receiver_id' => 'required',
+                'message_content' => 'required'
+            ]);
+
+            Message::create($request->except('_token'));
+
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
 
     }
 
 
-    public function update(){
+    public function update(Request $request, $id){
+
+        $message = Message::find($id);
+        if (session('user')['id'] === $message['sender_id']){
+            try {
+
+                $request->validate([
+                    'sender_id' => 'nullable',
+                    'receiver_id' => 'nullable',
+                    'message_content' => 'required'
+                ]);
+
+                $message = Message::findOrFail($id);
+                $message->update($request->except('_token'));
+
+                return true;
+            } catch (\Exception $e) {
+                return $e->getMessage();
+            }
+        } else {
+            return false;
+        }
 
     }
 
 
-    public function delete(){
+    public function delete($id){
 
+        $message = Message::find($id);
+        if (session('user')['id'] === $message['sender_id']){
+            try {
+
+                $message = Message::findOrFail($id);
+                $message->delete();
+
+                return true;
+            } catch (\Exception $e) {
+                return $e->getMessage();
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }

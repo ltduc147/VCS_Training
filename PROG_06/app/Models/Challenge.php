@@ -11,4 +11,11 @@ class Challenge extends Model
 
     protected $table = 'challenges';
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'teacher_id',
+        'title',
+        'hint',
+        'file_url'
+    ];
 }

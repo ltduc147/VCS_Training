@@ -11,4 +11,10 @@ class Message extends Model
 
     protected $table = 'messages';
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'sender_id',
+        'receiver_id',
+        'message_content'
+    ];
 }

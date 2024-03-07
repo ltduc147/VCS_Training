@@ -16,17 +16,18 @@
               <div class="assignment_title">{{(isset($assignment) ? $assignment['title']: "")}}</div>
               <div class="assignment_info">{{ (isset($assignment) ? $assignment['name']: "")}} &bull; {{ (isset($assignment) ? $assignment['date'] : "")}}</div>
               <div class="assignment_description">{{ (isset($assignment) ? $assignment['description']: "")}}</div>
-              <a class="file_info" href="{{ (isset($assignment) ? $assignment['file_url']: "")}}" download="{{ (isset($assignment) ? $assignment['file_name']: "")}}">
+              <a class="file_info" href="{{ (isset($assignment) ? asset($assignment['file_url']): "")}}" download="{{(isset($assignment) ? $assignment['file_name'] : "")}}">
+
                 <div class="file_name">{{ (isset($assignment) ? $assignment['file_name'] : "")}}</div>
                 <div class="file_type">{{ (isset($assignment) ? $assignment['file_type'] : "")}}</div>
               </a>
             </div>
-            {{--if($_SESSION['role'] !== 'teacher'): --}}
+            @if(session('user')['role'] !== 'teacher')
             <div class="submission_tab">
               <div class="submission_title">Submission</div>
               @if (isset($submission))
                 <div class="submission_info" >
-                  <a class="submission_detail" href="{{ $submission['file_url']}}" download="{{ $submission['file_name']}}">
+                  <a class="submission_detail" href="{{ asset($submission['file_url'])}}" download="{{ $submission['file_name']}}">
                     <div class="file_name">{{ $submission['file_name']}}</div>
                     <div class="file_type">{{ $submission['file_type']}}</div>
                   </a>
@@ -35,17 +36,19 @@
               @endif
               <div class="add_button"><i class="material-icons button">upload_file</i> &nbsp; {{ (isset($submission) ? "Change" : "Add")}} submission</div>
               <form action="" class="submission_form">
+                @csrf
                 <input type="file" name="submission_file" id="file_input">
                 <input type="hidden" name="assignment_id" value='{{ (isset($assignment) ? $assignment['id']: "")}}'>
+                <input type="hidden" name="student_id" value='{{session('user')['id']}}'>
               </form>
             </div>
-            {{-- @endif --}}
+            @endif
           </div>
-          {{-- if(isset($submission_list) && $_SESSION['role'] === 'teacher')  --}}
+          @if (count($submission_list) && session('user')['role'] === 'teacher')
             <div class="submission_list">
               <div class="list_title">Submissions</div>
               @foreach($submission_list as $row)
-                <a class="submission_row" href="{{ $row['file_url']}}" download="{{ $row['file_name']}}">
+                <a class="submission_row" href="{{ asset($row['file_url'])}}" download="{{ $row['file_name']}}">
                   <div class="submission_info">
                     <div class="submission_name">{{ $row['name']}}</div>
                     <div class="submission_detail">{{ $row['file_name']}} - {{$row['file_type']}} - {{$row['date']}}</div>
@@ -54,7 +57,7 @@
 
               @endforeach
             </div>
-          {{-- @endif --}}
+          @endif
         </div>
       </div>
     </div>
@@ -70,7 +73,7 @@
         var formData = new FormData($(".submission_form")[0]);
         console.log(formData);
         $.ajax({
-          url : './?controller=Submission&action=add_update',
+          url : '/submission/create_update',
           type: 'POST',
           data : formData,
           contentType: false,
@@ -87,7 +90,7 @@
       $('.submission_delete').click(function(){
         var submissionId = $(this).data('id');
         $.ajax({
-          url : `./?controller=Submission&action=delete&id=${submissionId}`,
+          url : `/submission/delete/${submissionId}`,
           type: 'GET',
           success: function(response) {
             location.reload();

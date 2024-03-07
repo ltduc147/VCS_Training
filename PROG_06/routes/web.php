@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChallengeController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SubmissionController;
@@ -16,38 +17,48 @@ use App\Http\Controllers\SubmissionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::redirect('/', '/login');
 
-Route::get('/user/students', [UserController::class, 'student_management'])->name('students');
-Route::get('/users', [UserController::class, 'user_list'])->name('users');
-Route::get('/user/form', [UserController::class, 'user_form']);
-Route::get('/user/{id}', [UserController::class, 'profile'])->where('id','[0-9]+');
-Route::get('/user/create', [UserController::class, 'create']);
-Route::get('/user/update/{id}', [UserController::class, 'update'])->where('id','[0-9]+');
-Route::get('/user/delete/{id}', [UserController::class, 'delete'])->where('id','[0-9]+');
+// Route for authentication
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'do_login']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('is_login');
 
+// Route for user action
+Route::get('/user/students', [UserController::class, 'student_management'])->name('students')->middleware('is_login', 'role:teacher');
+Route::get('/users', [UserController::class, 'user_list'])->name('users')->middleware('is_login');
+Route::get('/user/form', [UserController::class, 'user_form'])->middleware('is_login', 'role:teacher');
+Route::get('/user/{id}', [UserController::class, 'profile'])->where('id','[0-9]+')->name('profile')->middleware('is_login');
+Route::get('/user/avt_form', [UserController::class, 'avt_form'])->middleware('is_login');
+Route::post('/user/update_profile', [UserController::class, 'update_profile'])->middleware('is_login');
+Route::post('/user/change_pass', [UserController::class, 'change_pass'])->middleware('is_login');
+Route::post('/user/create', [UserController::class, 'create'])->middleware('is_login', 'role:teacher');
+Route::post('/user/update/{id}', [UserController::class, 'update'])->where('id','[0-9]+')->middleware('is_login', 'role:teacher');
+Route::get('/user/delete/{id}', [UserController::class, 'delete'])->where('id','[0-9]+')->middleware('is_login', 'role:teacher');
 
-Route::get('/assignments', [AssignmentController::class, 'assignment_list'])->name('assignments');
-Route::get('/assignment/form', [AssignmentController::class, 'assignment_form']);
-Route::get('/assignment/{id}', [AssignmentController::class, 'assignment_detail'])->where('id','[0-9]+');
-Route::get('/assignment/create', [AssignmentController::class, 'create']);
-Route::get('/assignment/update/{id}', [AssignmentController::class, 'update'])->where('id','[0-9]+');
-Route::get('/assignment/delete/{id}', [AssignmentController::class, 'delete'])->where('id','[0-9]+');
+// Route for assignment action
+Route::get('/assignments', [AssignmentController::class, 'assignment_list'])->name('assignments')->middleware('is_login');
+Route::get('/assignment/form', [AssignmentController::class, 'assignment_form'])->middleware('is_login', 'role:teacher');
+Route::get('/assignment/{id}', [AssignmentController::class, 'assignment_detail'])->where('id','[0-9]+')->middleware('is_login');
+Route::post('/assignment/create', [AssignmentController::class, 'create'])->middleware('is_login', 'role:teacher');
+Route::post('/assignment/update/{id}', [AssignmentController::class, 'update'])->where('id','[0-9]+')->middleware('is_login', 'role:teacher');
+Route::get('/assignment/delete/{id}', [AssignmentController::class, 'delete'])->where('id','[0-9]+')->middleware('is_login', 'role:teacher');
 
-Route::get('/challenges', [ChallengeController::class, 'challenge_list'])->name('challenges');
-Route::get('/challenge/form', [ChallengeController::class, 'challenge_form']);
-Route::get('/challenge/{id}', [ChallengeController::class, 'challenge_detail'])->where('id','[0-9]+');
-Route::get('/challenge/create', [ChallengeController::class, 'create']);
-Route::get('/challenge/update/{id}', [ChallengeController::class, 'update'])->where('id','[0-9]+');
-Route::get('/challenge/delete/{id}', [ChallengeController::class, 'delete'])->where('id','[0-9]+');
-Route::get('/challenge/check_answer/{id}', [ChallengeController::class, 'delete'])->where('id','[0-9]+');
+// Route for challenge action
+Route::get('/challenges', [ChallengeController::class, 'challenge_list'])->name('challenges')->middleware('is_login');
+Route::get('/challenge/form', [ChallengeController::class, 'challenge_form'])->middleware('is_login', 'role:teacher');
+Route::get('/challenge/{id}', [ChallengeController::class, 'challenge_detail'])->where('id','[0-9]+')->middleware('is_login');
+Route::post('/challenge/create', [ChallengeController::class, 'create'])->middleware('is_login', 'role:teacher');
+Route::post('/challenge/update/{id}', [ChallengeController::class, 'update'])->where('id','[0-9]+')->middleware('is_login', 'role:teacher');
+Route::get('/challenge/delete/{id}', [ChallengeController::class, 'delete'])->where('id','[0-9]+')->middleware('is_login', 'role:teacher');
+Route::post('/challenge/answer/{id}', [ChallengeController::class, 'answer'])->where('id','[0-9]+')->middleware('is_login');
 
-Route::get('/message/form', [MessageController::class, 'message_form']);
-Route::get('/message/create', [MessageController::class, 'create']);
-Route::get('/message/update/{id}', [MessageController::class, 'update'])->where('id','[0-9]+');
-Route::get('/message/delete/{id}', [MessageController::class, 'delete'])->where('id','[0-9]+');
+// Route for message action
+Route::get('/message/form', [MessageController::class, 'message_form'])->middleware('is_login');
+Route::post('/message/create', [MessageController::class, 'create'])->middleware('is_login');
+Route::post('/message/update/{id}', [MessageController::class, 'update'])->where('id','[0-9]+')->middleware('is_login');
+Route::get('/message/delete/{id}', [MessageController::class, 'delete'])->where('id','[0-9]+')->middleware('is_login');
 
-
-Route::get('/submission/form', [SubmissionController::class, 'message_form']);
-Route::get('/submission/create', [SubmissionController::class, 'create']);
-Route::get('/submission/update/{id}', [SubmissionController::class, 'update'])->where('id','[0-9]+');
-Route::get('/submission/delete/{id}', [SubmissionController::class, 'delete'])->where('id','[0-9]+');
+// Route for submission action
+Route::post('/submission/create_update', [SubmissionController::class, 'create_update'])->middleware('is_login');
+Route::get('/submission/delete/{id}', [SubmissionController::class, 'delete'])->where('id','[0-9]+')->middleware('is_login');

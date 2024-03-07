@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use App\Models\Message;
 
@@ -105,25 +106,130 @@ class UserController extends Controller
         ]);
     }
 
-    public function update_profile(){
+    public function avt_form(){
+        return view('users.avatar_form');
+    }
+
+    public function update_profile(Request $request){
+        try {
+
+            $request->validate([
+                'email' => 'nullable',
+                'phone_number' => 'nullable',
+                'avt' => 'nullable|file|mimes:jpg,png,gif,svg+xml,webp',
+
+            ]);
+
+            $user = User::findOrFail(session('user')['id']);
+
+            if ($request->has('avt')){
+                $file = $request->file('avt');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/avatars', $filename, '');
+                $request->merge(['avt_url' => 'storage/avatars/' . $filename]);
+
+                // Delete the old file
+                $old_file_path = str_replace('storage/', storage_path('app/public/'), $user['avt_url']);
+                if (file_exists($old_file_path)) {
+                    unlink($old_file_path);
+                }
+            } elseif ($request->has('avt_url')){
+                // Delete the old file
+                $old_file_path = str_replace('storage/', storage_path('app/public/'), $user['avt_url']);
+                if (file_exists($old_file_path)) {
+                    unlink($old_file_path);
+                }
+            }
+
+            $user->update($request->except(['avt' , '_token']));
+            session(['user' => $user]);
+
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
+    }
+
+    public function change_pass(Request $request){
+        try {
+
+            $request->validate([
+                'old_pass' => 'required',
+                'new_pass' => 'required',
+                'confirm_pass' => 'required'
+            ]);
+
+            $user = User::findOrFail(session('user')['id']);
+            if ($user['password'] === $request->input('old_pass')){
+                $user->update(['password' => $request->input('new_pass')]);
+                return true;
+            }
+
+            return false;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
+    }
+
+    public function create(Request $request) {
+
+        try {
+
+            $request->validate([
+                'username' => 'required',
+                'password' => 'required',
+                'full_name' => 'required',
+                'email' => 'required',
+                'phone_number' => 'required'
+            ]);
+
+            User::create($request->except('_token'));
+
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
 
     }
 
-    public function change_pass(){
 
+    public function update(Request $request, $id){
+
+        try {
+
+            $request->validate([
+                'username' => 'required',
+                'password' => 'required',
+                'full_name' => 'required',
+                'email' => 'nullable',
+                'phone_number' => 'nullable'
+            ]);
+
+            $user = User::findOrFail($id);
+            $user->update($request->except('_token'));
+
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
     }
 
-    public function create() {
 
-    }
+    public function delete($id){
 
+        try {
 
-    public function update(){
+            $user = User::findOrFail($id);
+            $user->delete();
 
-    }
-
-
-    public function delete(){
-
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
     }
 }

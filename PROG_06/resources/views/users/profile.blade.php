@@ -23,14 +23,14 @@
         <div class="tab_frame">
           <div class="frame_container">
             <div
-              {{--  echo (!isset($record["id"]) || $record["id"] !== $_SESSION["id"]) ? "style='height:250px; grid-template-rows: 2fr 2.5fr;'" : "" --}}
+              style='{{(!isset($user["id"]) || $user["id"] !== session('user')["id"]) ? 'height:250px; grid-template-rows: 2fr 2.5fr;' : ''}}'
               class="Information_frame"
             >
               <div class="img">
                 <img src="https://gust.com/assets/blank_slate/Gust_Profile_CoverPhoto_Blank-21edf1e2890708d5a507204f49afc10b7dc58eb7baea100b68a1bc2c96948297.png" alt="" />
               </div>
               <div class="profile_avatar">
-                <img class='avatar_img' src='{{$user["avt_url"] ?: ""}}' alt="">
+                <img class='avatar_img' src='{{asset($user["avt_url"]) ?: ""}}' alt="">
                 <button class="upload_avt" for="avt"><span class="material-icons" style="font-size:18px">photo_camera</span></button>
               </div>
               <div class="infor">
@@ -40,7 +40,7 @@
                 </div>
               </div>
 
-              {{-- if (!isset($record["id"]) || $record["id"] === $_SESSION["id"]) --}}
+              @if (!isset($user["id"]) || $user["id"] === session('user')["id"])
               <div
 
                 class="Profile_setting tab"
@@ -57,7 +57,7 @@
               >
                 CHANGE PASSWORD
               </div>
-              {{-- endif; --}}
+              @endif
 
             </div>
           </div>
@@ -67,6 +67,7 @@
             <form class="Update_form" method="post"
               style="display:{{$tab === "info" ? "grid" : "none"}}"
             >
+                @csrf
               <div class="lable_text">
                 <label for="username">USERNAME</label>
                 <input disabled type="text" name="username" value='{{$user["username"] ?: ""}}'/>
@@ -77,17 +78,18 @@
               </div>
               <div class="lable_text">
                 <label for="email">EMAIL ADDRESS</label>
-                <input <?php echo ((!isset($record["id"]) || $record["id"] !== $_SESSION["id"]) ? "disabled" : "") ?> required type="text" name="email" value='{{$user["email"] ?: ""}}'/>
+                <input <?php echo ((!isset($user["id"]) || $user["id"] !== session('user')["id"]) ? "disabled" : "") ?> required type="text" name="email" value='{{$user["email"] ?: ""}}'/>
               </div>
               <div class="lable_text">
                 <label for="phone_number">PHONE NUMBER</label>
-                <input <?php echo ((!isset($record["id"]) || $record["id"] !== $_SESSION["id"]) ? "disabled" : "") ?> required type="text" name="phone_number" value='{{$user["phone_number"] ?: ""}}'/>
+                <input <?php echo ((!isset($user["id"]) || $user["id"] !== session('user')["id"]) ? "disabled" : "") ?> required type="text" name="phone_number" value='{{$user["phone_number"] ?: ""}}'/>
               </div>
-              <button <?php echo ((!isset($record["id"]) || $record["id"] !== $_SESSION["id"]) ? "style='display:none;'" : "") ?> type='submit' class='update_button'>UPDATE PROFILE</button>
+              <button <?php echo ((!isset($user["id"]) || $user["id"] !== session('user')["id"]) ? "style='display:none;'" : "") ?> type='submit' class='update_button'>UPDATE PROFILE</button>
             </form>
 
             <div class="pass_form_wrapper" style="display:{{ $tab === "pass" ? "flex" : "none" }}">
               <form class="change_pass_form" name="change_pass_form" method="post">
+                  @csrf
                   <div class="pass_input">
                     <label for="old_pass">Old Password:</label>
                     <input required type="password" name="old_pass"/>
@@ -119,7 +121,7 @@
 
           <div class="message_tab_content">
             <div class="message_quantity">
-                {{count($messages)}} message for {{-- echo (isset($record) && ($record['id'] === $_SESSION['id'])) ? "You" : (isset($record) ? $record["full_name"] ?? "" : "") --}}
+                {{count($messages)}} message for {{ (isset($user) && ($user['id'] === session('user')["id"])) ? "You" : (isset($user) ? $user["full_name"] ?? "" : "") }}
             </div>
             @if (isset($messages))
             @foreach($messages as $row)
@@ -140,28 +142,30 @@
                   </div>
                 </div>
                 <div class="message_action">
-                  {{-- @if ($row['sender_id'] === $_SESSION['id']): --}}
+                  @if ($row['sender_id'] === session('user')["id"])
                     <i class='material-icons icon_edit' data-id='{{$row['id']}}'>border_color</i>
                     <i class='material-icons icon_delete' data-id='{{$row['id']}}'>&#xe872;</i>
-                  {{-- endif;--}}
+                  @endif
                 </div>
               </div>
             @endforeach
+            @endif
           </div>
-          {{-- @if (isset($record) && $record['id'] !== $_SESSION['id']):?> --}}
+          @if (isset($user) && $user['id'] !== session('user')["id"])
           <div class="message_add_form">
             <div class="form_title">
               Add a message
             </div>
             <form class='add_form'>
+                @csrf
               <input type="hidden" name="receiver_id" value='{{ $user['id'] }}'>
-              <input type="hidden" name="sender_id" value='' >
+              <input type="hidden" name="sender_id" value='{{session('user')["id"]}}' >
               <label class='label' for="message_content">Your message *</label>
               <textarea name="message_content" col='30', row='5' placeholder="Write a message..."></textarea>
               <button type="submit" class='_submit_button'>Submit</button>
             </form>
           </div>
-          <?php endif;?>
+          @endif
         </div>
         <div class="message_popup_form"></div>
         <div class="avatar_popup_form"></div>
@@ -287,7 +291,7 @@
             if (newPass === confirmPass){
               // Send AJAX request to changePass endpoint
               $.ajax({
-                url : `/message/change_pass/${messageId}`,
+                url : `/user/change_pass`,
                 type: 'POST',
                 data : $('.change_pass_form').serialize() ,
                 success: function(response) {
@@ -309,7 +313,7 @@
           event.preventDefault();
           // Send AJAX request to changePass endpoint
           $.ajax({
-            url : `./?controller=User&action=updateProfile`,
+            url : `/user/update_profile`,
             type: 'POST',
             data : $('.Update_form').serialize() ,
             success: function(response) {
@@ -325,7 +329,7 @@
         $('.upload_avt').click(function(){
             // Send AJAX request to viewForm endpoint
             $.ajax({
-                url: './?controller=User&action=view_avatar_form',
+                url: '/user/avt_form',
                 type: 'GET',
                 success: function(response) {
                     // Display the edit form
@@ -340,7 +344,7 @@
                       event.preventDefault();
                       var formData = new FormData($(".avatar_form")[0]);
                       $.ajax({
-                        url : './?controller=User&action=updateProfile',
+                        url : '/user/update_profile',
                         type: 'POST',
                         data : formData,
                         contentType: false,

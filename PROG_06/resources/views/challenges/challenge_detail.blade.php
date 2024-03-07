@@ -17,23 +17,24 @@
               <div class="assignment_info">{{ isset($challenge) ? $challenge['name']: ""}} &bull; {{ (isset($challenge) ? $challenge['date'] : "")}}</div>
               <div class="assignment_description">Hint:</div>
               <div class="hint">{!! isset($challenge) ? nl2br($challenge['hint']): ""!!}</div>
-              {{-- @if($_SESSION['role'] === 'teacher') --}}
-                <a class="file_info" href="{{ isset($challenge) ? $challenge['file_url']: "" }}" download="{{ (isset($challenge) ? $challenge['file_name']: "")}}">
-                  <div class="file_name">{{ isset($challenge) ? $challenge['file_name'] : "" }}</div>
+              @if(session('user')['role'] === 'teacher')
+                <a class="file_info" href="{{ isset($challenge) ? asset($challenge['file_url']) : "" }}" download="{{ (isset($challenge) ? $challenge['file_name']: "")}}">
+                  <div class="file_name">{{ (isset($challenge) ? $challenge['file_name']: "") }}</div>
                   <div class="file_type">{{ isset($challenge) ? $challenge['file_type'] : "" }}</div>
                 </a>
-              {{-- @endif --}}
+              @endif
 
             </div>
-            {{-- @if($_SESSION['role'] !== 'teacher')  --}}
+            @if(session('user')['role'] !== 'teacher')
             <div class="answer_tab">
               <div class="answer_title">Answer</div>
-              <form action="" class="answer_form">
+              <form action="post" class="answer_form">
+                @csrf
                 <input type="text" name="answer" >
                 <button class="answer_button" data-id="{{ isset($challenge) ? $challenge['id'] : '' }}">Submit</button>
               </form>
             </div>
-            {{-- @endif --}}
+            @endif
           </div>
           <div class="file_content"></div>
         </div>
@@ -49,7 +50,7 @@
         var challengeId = $(this).data('id');
 
         $.ajax({
-          url : `./?controller=Challenge&action=check_answer&id=${challengeId}`,
+          url : `/challenge/answer/${challengeId}`,
           type: 'POST',
           data : $(".answer_form").serialize(),
           success: function(response) {

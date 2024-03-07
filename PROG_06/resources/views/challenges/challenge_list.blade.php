@@ -11,12 +11,12 @@
       <div class="content">
         <div class="top_bar">
           <div class="page_title">CHALLENGE</div>
-          {{-- @if ($_SESSION['role'] === 'teacher'):?> --}}
+          @if (session('user')['role'] === 'teacher')
           <button class="add_record">
             <i class="material-icons button">extension</i> &nbsp;
             Add challenge
           </button>
-          {{-- @endif;?> --}}
+          @endif
         </div>
         <div class="main_content">
           <div class="page">
@@ -32,10 +32,10 @@
                     </div>
                   </a>
                   <div class="assignment_action">
-                    {{-- @if ($challenge['teacher_id'] === $_SESSION['id']):?> --}}
+                    @if ($challenge['teacher_id'] === session('user')['id'])
                       <i class='material-icons icon_edit' data-id='{{ $challenge['id']}}'>border_color</i>
                       <i class='material-icons icon_delete' data-id='{{ $challenge['id']}}'>&#xe872;</i>
-                    {{-- @endif; ?> --}}
+                    @endif
                   </div>
                 </div>
                 @endforeach

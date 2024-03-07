@@ -58,10 +58,10 @@ class ChallengeController extends Controller
             'txt' => 'Text'
         );
 
-        $challenge['file_name'] = basename($challenge['file_url']);
+        $challenge['file_name'] = substr(basename($challenge['file_url']), strpos(basename($challenge['file_url']), '_') + 1);
         $file_extension = pathinfo($challenge['file_url'], PATHINFO_EXTENSION);
         $challenge['file_type'] = isset($file_types[$file_extension]) ? $file_types[$file_extension] : 'Unknown';
-        $challenge['date'] = date('d/m/Y',strtotime($challenge['created_time']));
+        $challenge['date'] = date('d/m/Y',strtotime($challenge['created_at']));
 
 
         return view('challenges.challenge_detail' ,[
@@ -81,18 +81,106 @@ class ChallengeController extends Controller
         ]);
     }
 
+    public function answer(Request $request, $id){
+        try {
+            $request->validate([
+                'answer' => 'required'
+            ]);
 
-    public function create() {
+            $challenge = Challenge::find($id);
+            $filename = pathinfo($challenge['file_url'], PATHINFO_FILENAME);
+            $answer = substr($filename, strpos($filename, '_') + 1);
+            if ($answer === $request->input('answer')) {
+                //print_r(asset($challenge['file_url']));
+                return file_get_contents(str_replace('storage/', storage_path('app/public/'), $challenge['file_url']));
+            } else {
+                return null;
+            }
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
+    }
+
+
+    public function create(Request $request) {
+
+        try {
+
+            $request->validate([
+                'title' => 'required',
+                'hint' => 'required',
+                'teacher_id' => 'required',
+                'challenge_file' => 'required|file|mimes:txt'
+            ]);
+
+            $file = $request->file('challenge_file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            $file->storeAs('public/challenges', $filename, '');
+            $request->merge(['file_url' => 'storage/challenges/' . $filename]);
+            Challenge::create($request->except(['challenge_file' , '_token']));
+
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
 
     }
 
 
-    public function update(){
+    public function update(Request $request, $id){
 
+        try {
+
+            $request->validate([
+                'title' => 'required',
+                'hint' => 'required',
+                'teacher_id' => 'nullable',
+                'challenge_file' => 'nullable|file|mimes:txt'
+            ]);
+
+            $challenge = Challenge::findOrFail($id);
+
+            if ($request->has('challenge_file')){
+                $file = $request->file('challenge_file');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/challenges', $filename, '');
+                $request->merge(['file_url' => 'storage/challenges/' . $filename]);
+
+                // Delete the old file
+                $old_file_path = str_replace('storage/', storage_path('app/public/'), $challenge['file_url']);
+                if (file_exists($old_file_path)) {
+                    unlink($old_file_path);
+                }
+            }
+
+            $challenge->update($request->except(['challenge_file' , '_token']));
+
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
     }
 
 
-    public function delete(){
+    public function delete($id){
 
+        try {
+
+            $challenge = Challenge::findOrFail($id);
+            $old_file_path = str_replace('storage/', storage_path('app/public/'), $challenge['file_url']);
+            if (file_exists($old_file_path)) {
+                unlink($old_file_path);
+            }
+            $challenge->delete();
+
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+            return false;
+        }
     }
 }

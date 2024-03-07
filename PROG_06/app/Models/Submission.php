@@ -11,4 +11,10 @@ class Submission extends Model
 
     protected $table = 'submissions';
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'student_id',
+        'assignment_id',
+        'file_url'
+    ];
 }

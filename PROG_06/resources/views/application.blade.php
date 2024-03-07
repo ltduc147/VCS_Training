@@ -15,14 +15,14 @@
     <div class="app_main_container">
       <div class="nav_bar">
         <a href="./?controller=Record" class="home_link"><span class="orange">PROG</span> 05</a>
-        <img src="" alt="" class="avatar" onclick="dropdownDisplay()">
+        <img src="{{ asset(session('user')['avt_url'])}}" alt="" class="avatar" onclick="dropdownDisplay()">
         <div class="dropdown_menu">
           <div class="dropdown_content">
             <div class="user_info">
-              <img src="" alt="" class="user_avatar">
-              <div class="user_name">Lê Trung Đức</div>
+              <img src="{{ asset(session('user')['avt_url'])}}" alt="" class="user_avatar">
+              <div class="user_name">{{ session('user')['full_name']}}</div>
             </div>
-            <a href="./?controller=User&action=profile&id=" class="profile_link navigation_link">
+            <a href="/user/{{session('user')["id"]}}" class="profile_link navigation_link">
               <div class="circle">
                 <span class="material-icons" style="font-size:18px;">person</span>
               </div>
@@ -36,7 +36,7 @@
               <div class="text">List user</div>
               <span class="material-icons forward" style="font-size:12px;">arrow_forward_ios</span>
             </a>
-            {{-- <?php if ($_SESSION['role'] === 'teacher'): ?> --}}
+            @if (session('user')['role'] === 'teacher')
                 <a href="{{ route('students') }}" class="logout_link navigation_link">
                   <div class="circle">
                     <span class="material-icons" style="font-size:18px;">manage_accounts</span>
@@ -44,7 +44,7 @@
                   <div class="text">Student Management</div>
                   <span class="material-icons forward" style="font-size:12px;">arrow_forward_ios</span>
                 </a>
-            {{-- <?php endif;?> --}}
+            @endif
             <a href="{{ route('assignments') }}" class="logout_link navigation_link">
               <div class="circle">
                 <span class="material-icons" style="font-size:18px;">assignment</span>
@@ -60,7 +60,7 @@
               <span class="material-icons forward" style="font-size:12px;">arrow_forward_ios</span>
             </a>
 
-            <a href="?controller=Auth&action=logout" class="logout_link navigation_link">
+            <a href="{{ route('logout')}}" class="logout_link navigation_link">
               <div class="circle">
                 <span class="material-icons" style="font-size:18px;">logout</span>
               </div>

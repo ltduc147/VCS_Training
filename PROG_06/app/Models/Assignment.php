@@ -11,4 +11,11 @@ class Assignment extends Model
 
     protected $table = 'assignments';
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'teacher_id',
+        'title',
+        'description',
+        'file_url'
+    ];
 }

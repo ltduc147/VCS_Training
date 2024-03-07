@@ -9,6 +9,7 @@
       <div class="close"><span class="material-symbols-outlined">close_small</span></div>
     </div>
     <form class="record_form" enctype="multipart/form-data" method="post">
+        @csrf
       <div class="input_item username">
         <label for="username">Username</label>
         <input required type="text" name="username" value='{{ isset($user) ? $user["username"] ?? "" : "" }}' >

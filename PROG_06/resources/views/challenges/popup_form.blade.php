@@ -11,6 +11,7 @@
       <div class="close"><span class="material-symbols-outlined">close_small</span></div>
     </div>
     <form class="record_form" enctype="multipart/form-data" method="post">
+        @csrf
       <div class="input_item">
         <label for="title">Title</label>
         <input type="text" name="title" class='assignment_title' value='{{ $challenge ? $challenge["title"] : "" }}' placeholder="Challenge title ...">
@@ -23,7 +24,7 @@
         <label for="challenge_file">File</label>
         <input type="file" name="challenge_file">
       </div>
-      <input type="hidden" name="teacher_id" value='{{-- $_SESSION['id'] --}}'>
+      <input type="hidden" name="teacher_id" value='{{session('user')['id']}}'>
       <div class="button">
         <div class="cancel_button">Cancel</div>
         <button type="submit" class="submit_button">OK</button>
