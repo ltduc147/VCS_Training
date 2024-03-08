@@ -77,7 +77,7 @@ class UserController extends Controller
     public function user_form(Request $request){
 
         if ($request->has('id')) {
-            $user = $user = User::find($request->query('id'));
+            $user = User::find($request->query('id'));
         } else {
             $user = null;
         }

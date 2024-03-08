@@ -45,9 +45,9 @@ class MessageController extends Controller
 
     public function update(Request $request, $id){
 
-        $message = Message::find($id);
-        if (session('user')['id'] === $message['sender_id']){
-            try {
+        try {
+            $message = Message::findOrFail($id);
+            if (session('user')['id'] === $message['sender_id']){
 
                 $request->validate([
                     'sender_id' => 'nullable',
@@ -55,36 +55,32 @@ class MessageController extends Controller
                     'message_content' => 'required'
                 ]);
 
-                $message = Message::findOrFail($id);
                 $message->update($request->except('_token'));
 
                 return true;
-            } catch (\Exception $e) {
-                return $e->getMessage();
+            } else {
+                return false;
             }
-        } else {
-            return false;
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
+
 
     }
 
 
     public function delete($id){
-
-        $message = Message::find($id);
-        if (session('user')['id'] === $message['sender_id']){
-            try {
-
-                $message = Message::findOrFail($id);
+        try {
+            $message = Message::findOrFail($id);
+            if (session('user')['id'] === $message['sender_id']){
                 $message->delete();
-
                 return true;
-            } catch (\Exception $e) {
-                return $e->getMessage();
+            } else {
                 return false;
             }
-        } else {
-            return false;
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
+
     }
 }
