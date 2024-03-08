@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PROG 05</title>
+  <title>PROG 06</title>
   <link rel="stylesheet" type="text/css" href="{{ asset('css/application.css') }}">
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,7 +14,7 @@
 <body>
     <div class="app_main_container">
       <div class="nav_bar">
-        <a href="./?controller=Record" class="home_link"><span class="orange">PROG</span> 05</a>
+        <a href="./?controller=Record" class="home_link"><span class="orange">PROG</span> 06</a>
         <img src="{{ asset(session('user')['avt_url'])}}" alt="" class="avatar" onclick="dropdownDisplay()">
         <div class="dropdown_menu">
           <div class="dropdown_content">
