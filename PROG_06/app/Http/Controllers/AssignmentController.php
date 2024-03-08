@@ -133,7 +133,7 @@ class AssignmentController extends Controller
             $file = $request->file('assignment_file');
             $filename = time() . '_' . $file->getClientOriginalName();
 
-            $file->storeAs('public/assignments', $filename, '');
+            $file->move(public_path('storage/assignments'), $filename);
             $request->merge(['file_url' => 'storage/assignments/' . $filename]);
             Assignment::create($request->except(['assignment_file' , '_token']));
 
@@ -162,13 +162,13 @@ class AssignmentController extends Controller
             if ($request->has('assignment_file')){
                 $file = $request->file('assignment_file');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('public/assignments', $filename, '');
+                $file->move(public_path('storage/assignments'), $filename);
                 $request->merge(['file_url' => 'storage/assignments/' . $filename]);
 
                 // Delete the old file
-                $old_file_path = str_replace('storage/', storage_path('app/public/'), $assignment['file_url']);
-                if (file_exists($old_file_path)) {
-                    unlink($old_file_path);
+                //$old_file_path = str_replace('storage/', storage_path('app/public/'), );
+                if (file_exists(public_path($assignment['file_url']))) {
+                    unlink(public_path($assignment['file_url']));
                 }
             }
 
@@ -187,9 +187,9 @@ class AssignmentController extends Controller
         try {
 
             $assignment = Assignment::findOrFail($id);
-            $old_file_path = str_replace('storage/', storage_path('app/public/'), $assignment['file_url']);
-            if (file_exists($old_file_path)) {
-                unlink($old_file_path);
+            //$old_file_path = str_replace('storage/', storage_path('app/public/'), $assignment['file_url']);
+            if (file_exists(public_path($assignment['file_url']))) {
+                unlink(public_path($assignment['file_url']));
             }
             $assignment->delete();
 

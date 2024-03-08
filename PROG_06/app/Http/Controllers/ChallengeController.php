@@ -92,7 +92,7 @@ class ChallengeController extends Controller
             $answer = substr($filename, strpos($filename, '_') + 1);
             if ($answer === $request->input('answer')) {
                 //print_r(asset($challenge['file_url']));
-                return file_get_contents(str_replace('storage/', storage_path('app/public/'), $challenge['file_url']));
+                return file_get_contents(public_path($challenge['file_url']));
             } else {
                 return null;
             }
@@ -117,7 +117,7 @@ class ChallengeController extends Controller
             $file = $request->file('challenge_file');
             $filename = time() . '_' . $file->getClientOriginalName();
 
-            $file->storeAs('public/challenges', $filename, '');
+            $file->move(public_path('storage/challenges'), $filename);
             $request->merge(['file_url' => 'storage/challenges/' . $filename]);
             Challenge::create($request->except(['challenge_file' , '_token']));
 
@@ -146,13 +146,13 @@ class ChallengeController extends Controller
             if ($request->has('challenge_file')){
                 $file = $request->file('challenge_file');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('public/challenges', $filename, '');
+                $file->move(public_path('storage/challenges'), $filename);
                 $request->merge(['file_url' => 'storage/challenges/' . $filename]);
 
                 // Delete the old file
-                $old_file_path = str_replace('storage/', storage_path('app/public/'), $challenge['file_url']);
-                if (file_exists($old_file_path)) {
-                    unlink($old_file_path);
+                //$old_file_path = str_replace('storage/', storage_path('app/public/'), $challenge['file_url']);
+                if (file_exists(public_path($challenge['file_url']))) {
+                    unlink(public_path($challenge['file_url']));
                 }
             }
 
@@ -171,9 +171,9 @@ class ChallengeController extends Controller
         try {
 
             $challenge = Challenge::findOrFail($id);
-            $old_file_path = str_replace('storage/', storage_path('app/public/'), $challenge['file_url']);
-            if (file_exists($old_file_path)) {
-                unlink($old_file_path);
+            //$old_file_path = str_replace('storage/', storage_path('app/public/'), $challenge['file_url']);
+            if (file_exists(public_path($challenge['file_url']))) {
+                unlink(public_path($challenge['file_url']));
             }
             $challenge->delete();
 

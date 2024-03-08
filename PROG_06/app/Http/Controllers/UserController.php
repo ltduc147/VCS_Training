@@ -125,19 +125,19 @@ class UserController extends Controller
             if ($request->has('avt')){
                 $file = $request->file('avt');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('public/avatars', $filename, '');
+                $file->move(public_path('storage/avatars'), $filename);
                 $request->merge(['avt_url' => 'storage/avatars/' . $filename]);
 
                 // Delete the old file
-                $old_file_path = str_replace('storage/', storage_path('app/public/'), $user['avt_url']);
-                if (file_exists($old_file_path)) {
-                    unlink($old_file_path);
+                //$old_file_path = str_replace('storage/', storage_path('app/public/'), );
+                if (file_exists(public_path($user['avt_url']))) {
+                    unlink(public_path($user['avt_url']));
                 }
             } elseif ($request->has('avt_url')){
                 // Delete the old file
-                $old_file_path = str_replace('storage/', storage_path('app/public/'), $user['avt_url']);
-                if (file_exists($old_file_path)) {
-                    unlink($old_file_path);
+                //$old_file_path = str_replace('storage/', storage_path('app/public/'), $user['avt_url']);
+                if (file_exists(public_path($user['avt_url']))) {
+                    unlink(public_path($user['avt_url']));
                 }
             }
 

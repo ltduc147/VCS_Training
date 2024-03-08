@@ -26,14 +26,14 @@ class SubmissionController extends Controller
 
             $file = $request->file('submission_file');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/submissions', $filename, '');
+            $file->move(public_path('storage/submissions'), $filename);
             $request->merge(['file_url' => 'storage/submissions/' . $filename]);
 
             if (count($submission)) {
                 // Delete the old file
-                $old_file_path = str_replace('storage/', storage_path('app/public/'), $submission[0]['file_url']);
-                if (file_exists($old_file_path)) {
-                    unlink($old_file_path);
+                //$old_file_path = str_replace('storage/', storage_path('app/public/'), $submission[0]['file_url']);
+                if (file_exists(public_path($submission[0]['file_url']))) {
+                    unlink(public_path($submission[0]['file_url']));
                 }
                 $submission[0]->update($request->except(['submission_file' , '_token']));
             } else {
@@ -56,9 +56,9 @@ class SubmissionController extends Controller
         try {
 
             $submission = Submission::findOrFail($id);
-            $old_file_path = str_replace('storage/', storage_path('app/public/'), $submission['file_url']);
-            if (file_exists($old_file_path)) {
-                unlink($old_file_path);
+            //$old_file_path = str_replace('storage/', storage_path('app/public/'), $submission['file_url']);
+            if (file_exists(public_path($submission['file_url']))) {
+                unlink(public_path($submission['file_url']));
             }
             $submission->delete();
 
