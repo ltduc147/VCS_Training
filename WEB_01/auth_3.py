@@ -1,3 +1,5 @@
+### LAB: Username enumeration via response timing
+
 import requests
 import threading
 

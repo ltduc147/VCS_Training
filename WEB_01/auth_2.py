@@ -1,3 +1,5 @@
+### LAB: Username enumeration via subtly different responses
+
 import requests
 import threading
 import re
