@@ -11,7 +11,7 @@ proxies = {
 }
 
 # URL LAB ID
-url = 'https://0a0700fa04daf3948242f1f2003a000d.web-security-academy.net'
+url = 'https://0a580039038d92e382a2cf570048005c.web-security-academy.net'
 
 session = requests.Session()
 login_csrf = re.findall(r'name="csrf".*?value="(.*?)">', session.get(url + '/login').text)[0]
